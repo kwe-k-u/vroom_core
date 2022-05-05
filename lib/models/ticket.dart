@@ -1,4 +1,3 @@
-import 'package:vroom_core/models/bus.dart';
 
 enum TicketStatus{
   active,
