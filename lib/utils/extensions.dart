@@ -33,6 +33,11 @@ extension DateParse on DateTime{
     }
     return asString();
   }
+
+  TimeOfDay toTimeOfDay(){
+    return TimeOfDay(hour: hour, minute: minute);
+  }
+
 }
 
 extension DateRangeParser on DateTimeRange{
@@ -55,5 +60,14 @@ extension DateRangeParser on DateTimeRange{
       current = current.noTime().add(const Duration(days: 1));
     }
     return dates;
+  }
+}
+
+extension TimeComparsion on TimeOfDay{
+  bool isAfter(TimeOfDay other){
+    int thisMinutes = (hour * 60) + minute;
+    int otherMinutes = (other.hour * 60) + other.minute;
+
+    return thisMinutes > otherMinutes;
   }
 }

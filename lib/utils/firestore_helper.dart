@@ -180,10 +180,13 @@ Future<Trip?> getUpcomingTrip (String userId) async {
   QuerySnapshot<Map<String, dynamic>> result = await firestore
       .collection("public/bus_system/departure")
       .where("driverId", isEqualTo: userId)
-      .limit(1)
       .get();
-  if (result.docs.isNotEmpty){
-    return Trip.fromJson(result.docs.first.data());
+
+  for (QueryDocumentSnapshot<Map<String,dynamic>> doc in result.docs){
+    Trip trip =  Trip.fromJson(result.docs.first.data());
+    if (trip.tripDate.noTime().isAfter(DateTime.now().noTime()) && trip.setOffTime.isAfter(DateTime.now().toTimeOfDay())){
+      return trip;
+    }
   }
 
   return null;
